@@ -1,0 +1,120 @@
+<html>
+    <head>
+        <title>salam</title>
+        <style>
+            #div1 {color:green}
+            #div2 {color:blue}
+            #div3 {color:red}
+            p {font-weight: bold;}
+            .graybox{
+                background-color: lightgray;
+            }
+            .bluebox{
+                background-color: lightskyblue;
+                border: 5px solid blue;
+                margin: 5px;
+                text-align: center;
+            }
+
+            article{
+                border: 1px red solid;
+                width:150px;
+                height:150px;
+                margin:5px;
+                padding:5px;
+                text-align: center;
+            }
+            .main{
+                display: flex;
+                flex-wrap: wrap;
+            }
+            header{
+                font-size: 24px;
+                padding:20px;
+                background-color: lightgreen;
+            }
+            .bogborder{
+                border: 5px solid red;
+            }
+        </style>
+    </head>
+    <body>
+        <section>
+            <header>
+                salam
+            </header>
+        </section>
+       <div class="main">
+            <section>
+                <article id="article1">
+                    <input id="input1" type="button" value="sum">
+                </article>
+            </section>
+            <section>
+                <article id="article2">
+                    <input id="input2" type="button" value="multiply">
+                </article>
+            </section>
+       </div>
+
+        <section>
+            footer Lorem ipsum dolor sit amet consectetur.
+        </section>
+        <script>
+            
+            document
+                .getElementById("input1")
+                .addEventListener("click", function(){
+                    let request = new XMLHttpRequest();
+                    let data = {}
+
+                    request.open('GET', "http://127.0.0.1/sum/2/3");
+                    request.send(JSON.stringify(data));
+                    request.onreadystatechange = function () {
+                        if (request.readyState === XMLHttpRequest.DONE) {
+                            console.log(request.responseText);
+                            // if(request.status === 200){
+
+                            // }
+                            // else{
+
+                            // }
+                        }
+                        else {
+
+                        }
+                    }
+
+
+                });
+
+
+                document
+                .getElementById("input2")
+                .addEventListener("click", function(){
+                    let request = new XMLHttpRequest();
+                    let data = {}
+
+                    request.open('GET', "http://127.0.0.1/multiply/2/3");
+                    request.send(JSON.stringify(data));
+                    request.onreadystatechange = function () {
+                        if (request.readyState === XMLHttpRequest.DONE) {
+                            console.log(request.responseText);
+                            // if(request.status === 200){
+
+                            // }
+                            // else{
+
+                            // }
+                        }
+                        else {
+
+                        }
+                    }
+
+
+                });
+            
+        </script>
+    </body>
+</html>

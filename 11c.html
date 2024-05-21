@@ -1,0 +1,223 @@
+<html>
+    <head>
+        <title>salam</title>
+        <style>
+            #div1 {color:green}
+            #div2 {color:blue}
+            #div3 {color:red}
+            p {font-weight: bold;}
+            .graybox{
+                background-color: lightgray;
+            }
+            .bluebox{
+                background-color: lightskyblue;
+                border: 5px solid blue;
+                margin: 5px;
+                text-align: center;
+            }
+
+            article{
+                border: 1px red solid;
+                width:150px;
+                height:150px;
+                margin:5px;
+                padding:5px;
+                text-align: center;
+            }
+            .main{
+                display: flex;
+                flex-wrap: wrap;
+            }
+            header{
+                font-size: 24px;
+                padding:20px;
+                background-color: lightgreen;
+            }
+            .bogborder{
+                border: 5px solid red;
+            }
+            .op{
+                width:60px;
+            }
+        </style>
+    </head>
+    <body>
+        <section>
+            <header>
+                salam
+            </header>
+        </section>
+
+                <section class="main">
+                    <article id="article1">
+                        <input id="input1" type="button" value="sum">
+                    </article>
+                    <article id="article2">
+                        <input id="input2" type="button" value="multiply">
+                    </article>
+                    <article id="article3">
+                        <input id="op1" type="text" class="op">
+                        <input id="op2" type="text" class="op">
+                        <input id="multiply" type="button" value="multiply">
+                        <input id="sum" type="button" value="sum">
+                    </article>
+                    <article id="article4">
+                        <input id="op3" type="text" class="op">
+                        <input id="op4" type="text" class="op">
+                        <div id="result">
+
+                        </div>
+                        <input id="multiplyHtml" type="button" value="multiply">
+                        <input id="sumHtml" type="button" value="sum">
+                    </article>
+                </section>
+
+
+        <section>
+            footer Lorem ipsum dolor sit amet consectetur.
+        </section>
+        <script>
+            
+            document
+                .getElementById("input1")
+                .addEventListener("click", function(){
+                    let request = new XMLHttpRequest();
+                    let data = {}
+
+                    request.open('GET', "http://127.0.0.1/sum/2/3");
+                    request.send(JSON.stringify(data));
+                    request.onreadystatechange = function () {
+                        if (request.readyState === XMLHttpRequest.DONE) {
+                            console.log(request.responseText);
+                            // if(request.status === 200){
+
+                            // }
+                            // else{
+
+                            // }
+                        }
+                        else {
+
+                        }
+                    }
+
+
+                });
+
+
+            document
+                .getElementById("input2")
+                .addEventListener("click", function(){
+                    let request = new XMLHttpRequest();
+                    let data = {}
+
+                    request.open('GET', "http://127.0.0.1/multiply/2/3");
+                    request.send(JSON.stringify(data));
+                    request.onreadystatechange = function () {
+                        if (request.readyState === XMLHttpRequest.DONE) {
+                            console.log(request.responseText);
+                            // if(request.status === 200){
+
+                            // }
+                            // else{
+
+                            // }
+                        }
+                        else {
+
+                        }
+                    }
+
+
+                });
+
+            document
+                .getElementById("sum")
+                .addEventListener("click", function(){
+                    buttonController("op1","op2","sum")
+                });
+            document
+                .getElementById("multiply")
+                .addEventListener("click", function(){
+                    buttonController("op1","op2","multiply")
+                });
+
+            // function buttonController(operation){
+            //         let op1 = document.getElementById("op1").value;
+            //         let op2 = document.getElementById("op2").value;
+            //         let request = new XMLHttpRequest();
+            //         let data = {}
+                    
+            //         request.open('GET', "http://127.0.0.1/"+operation+"/"+op1+"/"+op2);
+            //         request.send(JSON.stringify(data));
+            //         request.onreadystatechange = function () {
+            //             if (request.readyState === XMLHttpRequest.DONE) {
+            //                 console.log(request.responseText);
+            //                 // if(request.s  tatus === 200){
+
+            //                 // }
+            //                 // else{
+
+            //                 // }
+            //             }
+            //             else {
+
+            //             }
+            //         }
+            //     }
+
+            function buttonController(oper1, oper2, operation, next){
+                    let op1 = document.getElementById(oper1).value;
+                    let op2 = document.getElementById(oper2).value;
+                    let request = new XMLHttpRequest();
+                    let data = {
+                        op1: op1,
+                        op2: op2
+                    }
+                    
+                    request.open('GET', "http://127.0.0.1/"+operation+"/"+op1+"/"+op2);
+                    request.send(JSON.stringify(data));
+                    request.onreadystatechange = function () {
+                        if (request.readyState === XMLHttpRequest.DONE) {
+                            if(next){
+                                next(request.responseText);
+                            }
+                            else{
+                                console.log(request.responseText);
+                            }
+                            
+                            // if(request.s  tatus === 200){
+
+                            // }
+                            // else{
+
+                            // }
+                        }
+                        else {
+
+                        }
+                    }
+                }
+
+            function insertElem(value){
+                document.getElementById("result").firstChild.remove()
+                let elem = document.createElement("div");
+                elem.innerHTML = value;
+                document.getElementById('result').appendChild(elem);
+            }
+
+            document
+                .getElementById("sumHtml")
+                .addEventListener("click", function(){
+                    buttonController("op3","op4","sum", insertElem)
+                });
+            document
+                .getElementById("multiplyHtml")
+                .addEventListener("click", function(){
+                    buttonController("op3","op4","multiply", insertElem)
+                });
+
+                
+        </script>
+    </body>
+</html>

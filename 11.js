@@ -12,24 +12,8 @@ function requestHandler(request, response){
     console.log('request:', request.url);
     command = request.url.split('/')[1];
 
-    // if(command === 'page1'){
-    //     response.writeHead(200, { 'Content-Type': 'text/plain'});
-    //     response.write('this is page1');
-    //     response.end();
-    // }
-    // if(command === 'page2'){
-    //     httpControllers.text(request, response);
-    // }
-    // if(command === 'page3'){
-    //     httpControllers.textFile(request, response);
-    // }
-    // if(command === 'create'){ 
-    //     httpControllers.createFile(request, response);
-    // }
-
-
     let commands = {
-        'favicon.ico':function(){
+        'favicon.ico': function(){
 
         },
         page1: function(){
@@ -56,10 +40,32 @@ function requestHandler(request, response){
         },
         page: function(){
             httpControllers.htmlFile(request, response);
+        },
+        sum: function(){
+            //httpControllers.sum(request, response);
+            httpControllers.sumController[request.method](request, response);
+        },
+        multiply: function(){
+            httpControllers.multiply(request, response);
         }
     }
 
-    commands[command]();
+    let data = ''
+    request.on('data', function(chunk){
+        data += chunk;
+    })
+    request.on('end', function(){
+        console.log(1, typeof data, data)
+        if(data){
+            request.data = JSON.parse(data);
+        }
+        else{
+            request.data = data;
+        }
+        console.log(2, typeof request.data, request.data)
+        commands[command]();
+    })
+   
 }
 
 if(process.argv[2]){
